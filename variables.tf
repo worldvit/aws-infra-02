@@ -1,5 +1,6 @@
 variable "AWS_REGION" { default = "us-west-2" }
 variable "ins_type" { default = "t3.micro" }
+
 # https://cloud-images.ubuntu.com/locator/ec2/
 variable "AMIS" {
     type = map(string)
