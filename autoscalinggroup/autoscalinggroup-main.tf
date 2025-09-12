@@ -7,19 +7,18 @@ resource "aws_launch_template" "web_lt" {
   key_name = var.mykey_key_name
 
   # 위에서 만든 스크립트 파일을 base64로 인코딩하여 전달
-#   user_data_base64 = filebase64("${path.module}/script-nginx-01.sh")
-#   user_data = filebase64("${path.module}/script-nginx-01.sh")
-    user_data = <<-EOF
-        #!/bin/bash
-        sleep 60
-        sudo apt -y update
-        sudo apt -y install nginx
-        sudo systemctl enable --now nginx
+  user_data = filebase64("${path.module}/script-nginx-01.sh")
+    # user_data = <<-EOF
+    #     #!/bin/bash
+    #     sleep 60
+    #     sudo apt -y update
+    #     sudo apt -y install nginx
+    #     sudo systemctl enable --now nginx
 
-        # AWS EC2 메타데이터 서비스에서 인스턴스 ID를 가져와서 index.html에 쓰기
-        INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-        echo "<h1>WebServer powered by Auto Scaling Group</h1><h2>Instance ID: $INSTANCE_ID</h2>" > /var/www/html/index.html
-    EOF
+    #     # AWS EC2 메타데이터 서비스에서 인스턴스 ID를 가져와서 index.html에 쓰기
+    #     INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+    #     echo "<h1>WebServer powered by Auto Scaling Group</h1><h2>Instance ID: $INSTANCE_ID</h2>" > /var/www/html/index.html
+    # EOF
   # 인스턴스 식별을 위한 태그 설정
   tag_specifications {
     resource_type = "instance"
