@@ -1,0 +1,12 @@
+aws ec2 create-vpc --cidr-block "192.168.0.0/24" --instance-tenancy "default" --tag-specifications '{"resourceType":"vpc","tags":[{"key":"Name","value":"for-console-vpc"}]}'
+aws ec2 modify-vpc-attribute --vpc-id "preview-vpc-1234" --enable-dns-hostnames '{"value":true}'
+aws ec2 describe-vpcs --vpc-ids "preview-vpc-1234"
+aws ec2 create-vpc-endpoint --vpc-id "preview-vpc-1234" --service-name "com.amazonaws.us-west-2.s3" --tag-specifications '{"resourceType":"vpc-endpoint","tags":[{"key":"Name","value":"for-console-vpce-s3"}]}'
+aws ec2 create-subnet --vpc-id "preview-vpc-1234" --cidr-block "192.168.0.144/28" --availability-zone "us-west-2b" --tag-specifications '{"resourceType":"subnet","tags":[{"key":"Name","value":"for-console-subnet-private2-us-west-2b"}]}'
+aws ec2 create-internet-gateway --tag-specifications '{"resourceType":"internet-gateway","tags":[{"key":"Name","value":"for-console-igw"}]}'
+aws ec2 attach-internet-gateway --internet-gateway-id "preview-igw-1234" --vpc-id "preview-vpc-1234"
+aws ec2 create-route-table --vpc-id "preview-vpc-1234" --tag-specifications '{"resourceType":"route-table","tags":[{"key":"Name","value":"for-console-rtb-private2-us-west-2b"}]}'
+aws ec2 create-route --route-table-id "preview-rtb-public-0" --destination-cidr-block "0.0.0.0/0" --gateway-id "preview-igw-1234"
+aws ec2 associate-route-table --route-table-id "preview-rtb-private-2" --subnet-id "preview-subnet-private-3"
+aws ec2 describe-route-tables --route-table-ids   "preview-rtb-private-1" "preview-rtb-private-2"
+aws ec2 modify-vpc-endpoint --vpc-endpoint-id "preview-vpce-1234" --add-route-table-ids "preview-rtb-private-1" "preview-rtb-private-2"

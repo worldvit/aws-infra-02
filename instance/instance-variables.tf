@@ -26,8 +26,10 @@ data "aws_ami" "ubuntu-linux" {
 #       "us-west-2" = "ami-03aa99ddf5498ceb9"
 #     }
 # }
-variable "allow_web" {}
+# variable "allow_web" {}
 variable "bastion" {}
+variable "web_sg_id" {}
+variable "allow_alb" {}
 variable "PATH_TO_PUBLIC_KEY" { default = "keys/mykey.pub" }
 variable "PATH_TO_PRIVATE_KEY" { default = "keys/mykey" }
 variable "INSTANCE_USERNAME" { default = "ubuntu" }

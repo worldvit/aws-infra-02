@@ -5,6 +5,7 @@ variable "PATH_TO_PUBLIC_KEY" { default = "keys/mykey.pub" }
 variable "PATH_TO_PRIVATE_KEY" { default = "keys/mykey" }
 variable "INSTANCE_USERNAME" { default = "ubuntu" }
 variable "allow_alb" {}
+variable "web_sg_id" {}
 variable "mykey_key_name" {}
 variable "ami-instance" {}
 variable "itskillboost-private-subnet-0" {}

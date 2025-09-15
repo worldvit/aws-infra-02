@@ -65,11 +65,12 @@ resource "aws_instance" "ec2-bastion" {
   }
 }
 
-# ssm.tf (새 파일로 관리하는 것을 권장)
+# ssm.tf
 resource "aws_ssm_parameter" "private_key" {
   name  = "/my-app/bastion/mykey" # 파라미터 이름 (계층적으로 관리)
   type  = "SecureString"
   value = file("keys/mykey")   # 로컬 개인 키 파일 경로를 지정하세요.
+  overwrite = true
 
   tags = {
     Name = "Bastion-Private-Key"

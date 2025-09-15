@@ -5,8 +5,9 @@ module "network" {
 
 module "instance" {
   source = "./instance"
-  allow_web = module.securitygroup.allow_web
   bastion = module.securitygroup.bastion
+  web_sg_id = module.securitygroup.web_sg_id
+  allow_alb = module.securitygroup.allow_alb
   mykey_key_name = module.keys.mykey_key_name
   itskillboost-private-subnet-0 = module.network.itskillboost-private-subnet-0
   itskillboost-private-subnet-1 = module.network.itskillboost-private-subnet-1
@@ -32,6 +33,7 @@ module "loadbalancer" {
 module "autoscalinggroup" {
   source = "./autoscalinggroup"
   allow_alb = module.securitygroup.allow_alb
+  web_sg_id = module.securitygroup.web_sg_id
   itskillboost-private-subnet-0 = module.network.itskillboost-private-subnet-0
   itskillboost-private-subnet-1 = module.network.itskillboost-private-subnet-1
   itskillboost_vpc_id = module.network.itskillboost_vpc_id
@@ -48,6 +50,8 @@ module "route53" {
 
 module "cloudfront" {
   source = "./cloudfront"
+  aws_route53_zone = module.route53.aws_route53_zone
+  itskillboost-alb = module.loadbalancer.itskillboost-alb
 }
 
 module "cloudwatch" {
