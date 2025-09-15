@@ -40,18 +40,3 @@ variable "aws_sg" {
     }
   }
 }
-// ec2_name
-variable "ec2_name" {
-  type = list(string)
-  default = [ "k8s-cp","k8s-n1","k8s-n2","k8s-n3" ]
-}
-
-
-variable "domain" {
-  default = "itskillboost.com"
-}
-
-
-variable "RDS_PASSWORD" {
-  default = "itskillboost"
-}
